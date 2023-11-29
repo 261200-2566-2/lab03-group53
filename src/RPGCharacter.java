@@ -1,45 +1,37 @@
 public class RPGCharacter {
-    private int level;
-    private int maxHP;
-    private int maxMana;
-    private int swordBaseDamage;
-    private int shieldBaseDefense;
-    private int baseRunSpeed;
-    private int currentRunSpeed;
-    private Sword equippedSword;
-    private Shield equippedShield;
+    private int Hp;
+    private int Mana;
+    private double Damage;
+    private double baseSpeed;
+    private double maxRunSpeed;
+    private int Level;
+    private double BaseDefense;
+    private double SwordDamage;
 
-    public RPGCharacter(int level){
-        this.level = level;
-        levelUp();
+    public RPGCharacter(int level,int BaseDamage,int BaseSpeed){
+        this.Level = level;
+        this.Hp = 100+10*this.Level;
+        this.Mana = 50+2*this.Level;
+        this.Damage = BaseDamage;
+        this.baseSpeed = BaseSpeed;
+        this.maxRunSpeed = baseSpeed*(0.1+0.03*this.Level) ;
     }
-    public void equipSword(Sword sword) {
-        this.equippedSword = sword;
-        updateCharacterStats();
+    public void usingSword(Sword Sword,int SwordDamage){
+        this.SwordDamage = SwordDamage*(1+0.1*Sword.SwordLevel);
+        this.maxRunSpeed = this.maxRunSpeed*(0.1+0.04*Sword.SwordLevel);
     }
-    public void equipShield(Shield shield) {
-        this.equippedShield = shield;
-        updateCharacterStats();
-    }
-    private void updateCharacterStats() {
-        if (equippedSword != null) {
-            currentRunSpeed -= equippedSword.getRunSpeedDecrease();
-        }
-
-        if (equippedShield != null) {
-            currentRunSpeed -= equippedShield.getRunSpeedDecrease();
-        }
-    }
-    public void levelUp(){
-        maxHP = 100 + 10 * level;
-        maxMana = 50 + 2 * level;
-        baseRunSpeed = 10;
-        currentRunSpeed = (int) (baseRunSpeed * (0.1 + 0.03 * level));
+    public void usingShield(Shield Shield,int baseDefense){
+        this.BaseDefense = baseDefense*(1+0.1*Shield.Shieldlevel);
+        this.maxRunSpeed = this.maxRunSpeed*(0.1+0.04*Shield.Shieldlevel);
     }
     public void display(){
-        System.out.println("Max HP : " + maxHP);
-        System.out.println("Max Mana : " + maxMana);
-        System.out.println("Max Run Speed : " + currentRunSpeed);
+        System.out.println("------------------------------");
+        System.out.println("HP: "+ this.Hp);
+        System.out.println("Mana: "+ this.Mana);
+        System.out.println("Damage: "+ this.Damage);
+        System.out.println("speed: "+ this.maxRunSpeed);
+        System.out.println("Sword: "+this.SwordDamage);
+        System.out.println("Defense: "+ this.BaseDefense);
+        System.out.println("------------------------------");
     }
 }
-
